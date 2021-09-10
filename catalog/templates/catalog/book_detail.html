@@ -1,0 +1,56 @@
+
+{% extends "catalog/base.html"%}
+
+{%block title%} 
+ {% if book %}
+<title> {{book.title}}</title>
+{% else %}
+<title>Sorry, book does not exist!</title>
+{% endif%}
+{%endblock %}
+
+{% block content %}
+<div class="container">
+<h1>Local Library Home</h1>
+  <p>Welcome to LocalLibrary, a website developed by <em>Mozilla Developer Network</em>!</p>
+  <h2>Book Detail:</h2>
+  {% if book %}
+  <p>Here is info about the book:</p>
+ 
+  <ul class="mb-4">
+
+    
+    <li><strong>Books Title:</strong><a href="{{ book.get_absolute_url }} "> {{ book.title }} </a></li>
+    <li><strong>Author:</strong> <a href="{{ book.get_absolute_url }} ">{{ book.author}} </a></li>
+    <li><strong>ISBN:</strong> {{ book.ISBN }}</li>
+    <li><strong>Language:</strong> {{ book.written_language }}</li>
+    <li><strong>Genres:</strong> {{ book.category.all|join:", " }}</li>
+    
+  </ul>
+  
+
+  {% else %}
+    <p>There is no this book in the library.</p>
+
+  {% endif%}
+  <div class="container">
+    <h3>Copies:</h3>
+      {% for copy in book.bookinstance_set.all %}
+      <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+         {{ copy.get_status_display }}
+      </p>
+
+      {% if copy.status != 'a' %}
+        <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
+      {% endif %}
+
+    <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
+    <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+
+     {% endfor %}
+  </div>
+  
+</div>
+
+
+{% endblock content%}

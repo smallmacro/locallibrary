@@ -1,0 +1,20 @@
+
+{% extends "catalog/base.html"%}
+{%block title%} 
+<title> Welcome to our Local Library</title>
+{%endblock%}
+
+{% block content %}
+<article class="media content-section">
+  
+  <div class="media-body">
+    <div class="article-metadata">
+      
+      <small class="text-muted">There are {{ num_books }} books.</small>
+    </div>
+    <h2>There are {{num_instances}} copies of books in our library.</h2>
+    <p class="article-content">There are {{ num_instance_available}} books available now.</p>
+     <p class="article-content">There are {{ num_authors}} authors.</p>
+  </div>
+</article>
+{% endblock content%}
