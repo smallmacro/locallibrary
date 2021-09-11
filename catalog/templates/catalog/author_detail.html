@@ -1,0 +1,53 @@
+
+{% extends "catalog/base.html"%}
+
+{%block title%} 
+ {% if author %}
+<title> {{author.title}}</title>
+{% else %}
+<title>Sorry, author does not exist!</title>
+{% endif%}
+{%endblock %}
+
+{% block content %}
+<div class="container">
+<h1>Local Library Home</h1>
+  
+  <h2>Author Detail:</h2>
+  {% if author %}
+  <p>Here is info about the author:</p>
+ 
+  <ul class="mb-4">
+
+    
+    
+    <li><strong>Author Name:</strong> <a href="{{ author.get_absolute_url }} ">{{ author.first_name|upper}} {{ author.last_name|upper}}</a></li>
+    <li><strong>Birthday:</strong> {{ author.date_of_birth}}</li>
+    {% if author.date_of_death != Null %}
+    <li><strong>Date of death:</strong> {{ author.date_of_death}}</li>
+    {% endif %}
+  </ul>
+  
+
+  {% else %}
+    <p>There is no this author in the library.</p>
+
+  {% endif%}
+  <div class="container">
+    <h3>Books In Library:</h3>
+      {% for book in author.book_set.all %}
+         
+           <p> <strong>Books Title:</strong><a href="{{ book.get_absolute_url }} "> {{ book.title }} </a></p>
+           <p><strong>Summary:</strong> {{ book.summary }}</p>
+           <p><strong>Language:</strong> {{ book.written_language }}</p>
+           <p><strong>Genres:</strong> {{ book.category.all|join:", " }}</p>
+
+          
+
+     {% endfor %}
+  </div>
+  
+</div>
+
+
+{% endblock content%}

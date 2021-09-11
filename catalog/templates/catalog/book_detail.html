@@ -27,7 +27,9 @@
     <li><strong>Genres:</strong> {{ book.category.all|join:", " }}</li>
     
   </ul>
-  
+  <p class="container">
+    <em>Summary:</em> {{ book.summary }}
+  </p>
 
   {% else %}
     <p>There is no this book in the library.</p>

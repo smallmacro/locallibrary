@@ -31,6 +31,7 @@ def book_list(request):
     context = {
         'book_list':book_list
     }
+    
     return render(request, 'catalog/book_list.html', context)
 
 
@@ -41,6 +42,19 @@ def book_detail(request, pk):
     }
     return render(request, 'catalog/book_detail.html', context)
 
+def author_list(request):
+    author_list = Author.objects.all()
+    context = {
+        'author_list': author_list
+    }
+    return render(request, 'catalog/author_list.html' , context)
+
+def author_detail(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    context = {
+        'author' : author
+    }
+    return render(request, 'catalog/author_detail.html', context)
 
 
 
@@ -68,7 +82,7 @@ class BookListView(ListView):
     model = Book
     template_name = 'catalog/book_list.html'    
     context_object_name = 'book_list'
-
+    paginate_by = 2
     # filter queryset outcome here
     # def get_queryset(self):
     #     pass
@@ -82,3 +96,17 @@ class BookDetailView(DetailView):
     # def get_context_data(self, **kwargs):
     #     context = super(BookDetailView, self).get_context_data(**kwargs)
     #     context['copies'] = 
+
+class AuthorListView(ListView):
+    model = Author
+    template_name = 'catalog/author_list.html'    
+    context_object_name = 'author_list'
+
+
+class AuthorDetailView(DetailView):
+    template_name = 'catalog/author_detail.html'
+    model = Author
+    context_object_name = 'author'
+
+
+
