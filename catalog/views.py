@@ -4,6 +4,8 @@ from django.views.generic import (
     ListView,
     DetailView
     )
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin ,PermissionRequiredMixin
 
 # Create your views here.
 def index(request):
@@ -25,7 +27,8 @@ def index(request):
     return render(request, 'catalog/index.html', context=context)
 
 
-
+@login_required
+@permission_required('catalog.can_mark_returned', raise_exception=True)
 def book_list(request):
     book_list = Book.objects.all()
     context = {
@@ -34,7 +37,7 @@ def book_list(request):
     
     return render(request, 'catalog/book_list.html', context)
 
-
+@login_required
 def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
     context = {
@@ -42,6 +45,7 @@ def book_detail(request, pk):
     }
     return render(request, 'catalog/book_detail.html', context)
 
+@login_required
 def author_list(request):
     author_list = Author.objects.all()
     context = {
@@ -49,6 +53,7 @@ def author_list(request):
     }
     return render(request, 'catalog/author_list.html' , context)
 
+@login_required
 def author_detail(request, pk):
     author = get_object_or_404(Author, pk=pk)
     context = {
@@ -78,7 +83,7 @@ class HomeListView(ListView):
 
 
 
-class BookListView(ListView):
+class BookListView(LoginRequiredMixin,ListView):
     model = Book
     template_name = 'catalog/book_list.html'    
     context_object_name = 'book_list'
@@ -88,7 +93,7 @@ class BookListView(ListView):
     #     pass
 
 
-class BookDetailView(DetailView):
+class BookDetailView(LoginRequiredMixin,DetailView):
     template_name = 'catalog/book_detail.html'
     model = Book
     context_object_name = 'book'
@@ -97,16 +102,30 @@ class BookDetailView(DetailView):
     #     context = super(BookDetailView, self).get_context_data(**kwargs)
     #     context['copies'] = 
 
-class AuthorListView(ListView):
+class AuthorListView(LoginRequiredMixin,ListView):
     model = Author
     template_name = 'catalog/author_list.html'    
     context_object_name = 'author_list'
 
 
-class AuthorDetailView(DetailView):
+class AuthorDetailView(LoginRequiredMixin,DetailView):
     template_name = 'catalog/author_detail.html'
     model = Author
     context_object_name = 'author'
 
+class LoanedBookByUserListView(LoginRequiredMixin,ListView):
+    template_name = 'catalog/BookInstance_list_view.html'
+    model = BookInstance
+    # context_object_name = 'copy_list'
 
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+
+class LoanedBookManagementListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
+    template_name = 'catalog/loaned_book_list.html'
+    model = BookInstance
+    permission_required = 'catalog.can_mark_returned'
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact='o').order_by('due_back')
 

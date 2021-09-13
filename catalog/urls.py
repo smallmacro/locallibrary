@@ -16,7 +16,9 @@ from .views import (
    BookListView,
    BookDetailView,
    AuthorListView,
-   AuthorDetailView
+   AuthorDetailView,
+   LoanedBookByUserListView,
+   LoanedBookManagementListView
 
    )
 
@@ -36,6 +38,8 @@ urlpatterns = [
    path('book/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
    path('author/', AuthorListView.as_view(), name='author-list'),
    path('author/<int:pk>/', AuthorDetailView.as_view(), name='author-detail'),
+   path('mybook/', LoanedBookByUserListView.as_view(), name='my-borrowed-list'),
+   path('borrowed/', LoanedBookManagementListView.as_view(), name='loaned-book-list'),
    # re_path(r'^book/(?P<year>[0-9]{4})', book_list, name='book-list-year')
    
 ]

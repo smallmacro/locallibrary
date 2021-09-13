@@ -26,7 +26,8 @@ urlpatterns = [
 
 urlpatterns += [
     path('',RedirectView.as_view(url='catalog/')),
-    path('catalog/', include('catalog.urls'))
+    path('catalog/', include('catalog.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 # Use static() to add url mapping to serve static files during development (only)

@@ -36,10 +36,11 @@
         <div class="col-md-4">
           <div class="content-section">
             {% block sidebar %}
+            <p>Welcome , {{user.get_username}}</p>
             <ul class="sidebar-nav">
               <li><a href="{% url 'index' %}">Home</a></li>
-              <li><a href="">All books</a></li>
-              <li><a href="">All authors</a></li>
+              <li><a href="{% url 'book-list' %}">All books</a></li>
+              <li><a href="{% url 'author-list' %}">All authors</a></li>
             </ul>
             {% endblock sidebar%}
           </div>

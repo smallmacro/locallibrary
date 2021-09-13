@@ -1,0 +1,8 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+  <p>You have been logged out !</p>
+  {# Assumes you setup the password_reset view in your URLconf #}
+  <p><a href="{% url 'login' %}">Log In Again?</a></p>
+
+{% endblock %}
