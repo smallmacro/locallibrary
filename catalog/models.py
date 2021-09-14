@@ -31,12 +31,12 @@ class Author(models.Model):
         ordering = [ 'first_name','last_name']
 
     def __str__(self):
-        return f'{self.last_name} {self.first_name}'
+        return f'{self.last_name}, {self.first_name}'
 
     def get_absolute_url(self):
         """Returns the url to access a particular author instance."""
         return reverse('author-detail', args=[str(self.id)])
-    
+
 
 class Book(models.Model):
     title = models.CharField(max_length=200,help_text='Enter the title')

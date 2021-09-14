@@ -91,14 +91,22 @@ class MyClassView(LoginRequiredMixin,PermissionRequiredMixin,View):
 `{{ form.as_p }}` will render them wrapped in <p> tags
 `{{ form.as_ul }}` will render them wrapped in <li> tags
 
+6. Write automated tests. 
+`Unit tests`: Verify functional behavior of individual components, often to class and function level.
+`setUpTestData()` is called once at the beginning of the test run for class-level setup. You'd use this to create objects that aren't going to be modified or changed in any of the test methods.
+`setUp() `is called before every test function to set up any objects that may be modified by the test (every test function will get a "fresh" version of these objects).
 
+The most essential thing in writing a unit test is focusing on the desired design in code, not the  Django built-in function or third-party libraries.
 
+One worth to mention is the relationship between some test functions may be recuresive. For example ,`fun1()` contains `step A`and `step B`, while `fun2()`may contains `step A`, `step B` and `step C`.
 
 ### Things need to be done:
 1. automatically check the status of book instance
 2. manage the borrowed books with due date, list them or remind the borrower with a email .
 3. set the limitation number  of books a borrower can take. 
+4. Need a good design for the website.
 
 ### Confused
 
-1.  how `session` works 
+1.  how the `session` will be used in more complicated ways.
+2. Writing `Unit Test` seems to be a boring and tedious job which may take much time. How it would be in real production?    
