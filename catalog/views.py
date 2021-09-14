@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from .models import (Book, BookInstance, Author,Genre)
 from django.views.generic import (
     ListView,
@@ -6,6 +6,10 @@ from django.views.generic import (
     )
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin ,PermissionRequiredMixin
+
+from .forms import RenewBookForm, RenewBookModelForm
+from django.http import HttpResponseRedirect
+import datetime
 
 # Create your views here.
 def index(request):
@@ -61,6 +65,28 @@ def author_detail(request, pk):
     }
     return render(request, 'catalog/author_detail.html', context)
 
+#Only Librarians can renew the due date.
+@login_required
+@permission_required('catalog.can_mark_returned')
+def renew_book_librarian(request, pk):
+    book_instance = get_object_or_404(BookInstance, pk=pk)
+    if request.method == 'POST':
+        form = RenewBookModelForm(request.POST)
+
+        if form.is_valid():
+            book_instance.due_back = form.cleaned_data['due_back']
+            book_instance.save()
+            return HttpResponseRedirect(reverse('loaned-book-list') )
+    else:
+        proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+        form = RenewBookModelForm(initial={'due_back':proposed_renewal_date})
+
+    context = {
+        'form': form,
+        'book_instance':book_instance
+    }
+
+    return render(request, 'catalog/renewal_book.html', context)
 
 
 class HomeListView(ListView):
@@ -121,6 +147,8 @@ class LoanedBookByUserListView(LoginRequiredMixin,ListView):
     def get_queryset(self):
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
 
+
+#Only librarians can see all the books borrowed.
 class LoanedBookManagementListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
     template_name = 'catalog/loaned_book_list.html'
     model = BookInstance

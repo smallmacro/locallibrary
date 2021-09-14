@@ -6,7 +6,8 @@ from catalog.views import (
    book_list,
    book_detail,
    author_list,
-   author_detail
+   author_detail,
+   renew_book_librarian
    
 )
 
@@ -29,6 +30,7 @@ urlpatterns = [
    # path('author/', author_list, name='author-list'),
    # path('author/<int:pk>/', author_detail, name='author-detail'),
    # path('book/<int:pk>/', book_detail, name='book-detail'),
+   path('book/<uuid:pk>/renew/', renew_book_librarian, name='renew-book-librarian'),
 
 
 
@@ -40,6 +42,7 @@ urlpatterns = [
    path('author/<int:pk>/', AuthorDetailView.as_view(), name='author-detail'),
    path('mybook/', LoanedBookByUserListView.as_view(), name='my-borrowed-list'),
    path('borrowed/', LoanedBookManagementListView.as_view(), name='loaned-book-list'),
+
    # re_path(r'^book/(?P<year>[0-9]{4})', book_list, name='book-list-year')
    
 ]

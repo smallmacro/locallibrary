@@ -85,3 +85,16 @@ class MyClassView(LoginRequiredMixin,PermissionRequiredMixin,View):
 ```
 
 4. `admin.py`can control the `list_display` and `list_filter`in admin site by `decorators`.
+
+
+5. `{{ form.as_table }}` will render them as table cells wrapped in <tr> tags
+`{{ form.as_p }}` will render them wrapped in <p> tags
+`{{ form.as_ul }}` will render them wrapped in <li> tags
+
+
+
+
+### Things need to be done:
+1. automatically check the status of book instance
+2. manage the borrowed books with due date, list them or remind the borrower with a email .
+3. set the number limitation of books a borrower can take. 

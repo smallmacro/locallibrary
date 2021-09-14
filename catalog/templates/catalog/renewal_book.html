@@ -1,35 +1,28 @@
 
 {% extends "catalog/base.html"%}
 {%block title%} 
-<title> Book List for all borrowers </title>
+<title> Book renewal </title>
 {%endblock%}
 
 {% block content %}
-<h1>Local Library Home</h1>
+  <h1>Renew: {{ book_instance.book.title }}</h1>
+  <p>Borrower: {{ book_instance.borrower }}</p>
+
+  <p{% if book_instance.is_overdue %} class="text-danger"{% endif %}>Due date: {{ book_instance.due_back }}</p>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    
+    <table>
+      {{form.as_table}}
+    </table>
+
+    <input type="submit" value="Submit">
+
+  </form>  
   
-  <h2>Borrowers List:</h2>
-
-  {% if bookinstance_list %}
-  <p>All borrowed Books currently:</p>
   
-   
-    {% for copy in bookinstance_list %}
-    <div class="container">
-      <p class="text-muted"><strong>Borrower:</strong> {{ copy.borrower }}</p>
-      <p><strong>Book Title:</strong><a href="{% url 'book-detail' copy.book.id%}"> {{ copy.book.title }} </a></p>
-      <p class="text-info">
-         <strong>Due to back:</strong> {{ copy.due_back }} <a href="{%url 'renew-book-librarian' copy.id %}"> >> Renew</a> 
-      </p>
-      <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
-    </div>
-     {% endfor %}
-
-
-
-  {% else %}
-    <p>There are no books in the library.</p>
-
-  {% endif%}
+    
 
  
 
