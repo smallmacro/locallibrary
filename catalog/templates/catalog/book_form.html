@@ -1,0 +1,28 @@
+{% extends "catalog/base.html"%}
+
+
+
+
+{%block title%} 
+ {% if book %}
+<title> {{book.title}}</title>
+{% else %}
+<title>Sorry, book does not exist!</title>
+{% endif%}
+{%endblock title%} 
+
+{% block content %}
+<div class="container">
+<h1>Local Library Home</h1>
+  
+  <h2>Book Detail:</h2>
+  <form action="" method="POST">
+      {% csrf_token%}
+      {{ form.as_p }}
+      <input type="submit" value="Submit">
+  </form>
+   
+</div>
+
+
+{% endblock content%}

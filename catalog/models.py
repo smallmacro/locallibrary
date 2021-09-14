@@ -36,7 +36,7 @@ class Author(models.Model):
     def get_absolute_url(self):
         """Returns the url to access a particular author instance."""
         return reverse('author-detail', args=[str(self.id)])
-
+    
 
 class Book(models.Model):
     title = models.CharField(max_length=200,help_text='Enter the title')

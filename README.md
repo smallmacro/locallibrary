@@ -97,4 +97,8 @@ class MyClassView(LoginRequiredMixin,PermissionRequiredMixin,View):
 ### Things need to be done:
 1. automatically check the status of book instance
 2. manage the borrowed books with due date, list them or remind the borrower with a email .
-3. set the number limitation of books a borrower can take. 
+3. set the limitation number  of books a borrower can take. 
+
+### Confused
+
+1.  how `session` works 

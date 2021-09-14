@@ -2,7 +2,10 @@ from django.shortcuts import render, get_object_or_404, reverse
 from .models import (Book, BookInstance, Author,Genre)
 from django.views.generic import (
     ListView,
-    DetailView
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
     )
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin ,PermissionRequiredMixin
@@ -10,6 +13,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin ,PermissionRequiredMix
 from .forms import RenewBookForm, RenewBookModelForm
 from django.http import HttpResponseRedirect
 import datetime
+
+from django.urls import reverse_lazy
 
 # Create your views here.
 def index(request):
@@ -127,6 +132,29 @@ class BookDetailView(LoginRequiredMixin,DetailView):
     # def get_context_data(self, **kwargs):
     #     context = super(BookDetailView, self).get_context_data(**kwargs)
     #     context['copies'] = 
+class BookCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
+    model = Book
+    fields = ['title', 'author' ,'written_language','ISBN','summary','category']
+    permission_required = 'catalog.can_mark_returned'
+
+class BookUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+    model = Book
+    fields = ['title', 'author' ,'written_language','ISBN','summary','category']
+    permission_required = 'catalog.can_mark_returned'
+
+    # success_url = reverse_lazy('author-detail')
+
+class BookDeleteView(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
+    model = Book
+    # fields = ['first_name', 'last_name' ,'date_of_birth','date_of_death']
+    permission_required = 'catalog.can_mark_returned'
+    
+    success_url = reverse_lazy('book-list')
+
+
+
+
+
 
 class AuthorListView(LoginRequiredMixin,ListView):
     model = Author
@@ -138,6 +166,27 @@ class AuthorDetailView(LoginRequiredMixin,DetailView):
     template_name = 'catalog/author_detail.html'
     model = Author
     context_object_name = 'author'
+
+class AuthorCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
+    model = Author
+    fields = ['first_name', 'last_name' ,'date_of_birth','date_of_death']
+    permission_required = 'catalog.can_mark_returned'
+
+class AuthorUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+    model = Author
+    fields = ['first_name', 'last_name' ,'date_of_birth','date_of_death']
+    permission_required = 'catalog.can_mark_returned'
+
+    # success_url = reverse_lazy('author-detail')
+
+class AuthorDeleteView(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
+    model = Author
+    # fields = ['first_name', 'last_name' ,'date_of_birth','date_of_death']
+    permission_required = 'catalog.can_mark_returned'
+
+    success_url = reverse_lazy('author-list')
+
+
 
 class LoanedBookByUserListView(LoginRequiredMixin,ListView):
     template_name = 'catalog/BookInstance_list_view.html'
