@@ -4,6 +4,19 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 from .models import BookInstance
 
+from django.contrib.auth.models import User 
+from django.contrib.auth.forms import UserCreationForm
+
+class UerRegisterForm(UserCreationForm):
+
+    class Meta:
+        model = User 
+        fields = [ 'username',
+                    'email',
+                    'password1',
+                    'password2'
+        ]
+
 
 class RenewBookForm(forms.Form):
     renewal_date = forms.DateField(help_text="Enter a date between now and 4 weeks (default 3).")

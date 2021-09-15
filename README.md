@@ -87,7 +87,9 @@ class MyClassView(LoginRequiredMixin,PermissionRequiredMixin,View):
 4. `admin.py`can control the `list_display` and `list_filter`in admin site by `decorators`.
 
 
-5. `{{ form.as_table }}` will render them as table cells wrapped in <tr> tags
+5.  Forms variables in Template:
+
+`{{ form.as_table }}` will render them as table cells wrapped in <tr> tags
 `{{ form.as_p }}` will render them wrapped in <p> tags
 `{{ form.as_ul }}` will render them wrapped in <li> tags
 
@@ -108,11 +110,24 @@ One worth to mention is the relationship between some test functions may be recu
 
 `python manage.py check --deploy` can automatically check settings security before deployment.
 
+8. Set up the database configuration with `dj_database_url` in `settings.py`
+```python
+# Heroku: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+```
+
+
+
 ### Things need to be done:
-1. automatically check the status of book instance
-2. manage the borrowed books with due date, list them or remind the borrower with a email .
-3. set the limitation number  of books a borrower can take. 
-4. Need a good design for the website.
+1. Researches on online library  need to done before fully designing website features. -- Product Functions:
+
+    - A new user can register [First name , Last name , email, personal decription]and has its own profile and so on. 
+    - automatically check the status of book instance,manage the borrowed books with due date, list them or remind the borrower with a email .
+    - set the limitation number  of books a borrower can take. 
+    
+2. Need a good design for the website.
 
 ### Confused
 

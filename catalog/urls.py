@@ -7,7 +7,8 @@ from catalog.views import (
    book_detail,
    author_list,
    author_detail,
-   renew_book_librarian
+   renew_book_librarian,
+   register
    
 )
 
@@ -36,6 +37,8 @@ urlpatterns = [
    # path('author/', author_list, name='author-list'),
    # path('author/<int:pk>/', author_detail, name='author-detail'),
    # path('book/<int:pk>/', book_detail, name='book-detail'),
+   path('register/',register , name='register'),
+
    path('book/<uuid:pk>/renew/', renew_book_librarian, name='renew-book-librarian'),
 
 

@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404, reverse
+from django.shortcuts import render, get_object_or_404, reverse,redirect
 from .models import (Book, BookInstance, Author,Genre)
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     DetailView,
@@ -10,7 +11,7 @@ from django.views.generic import (
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin ,PermissionRequiredMixin
 
-from .forms import RenewBookForm, RenewBookModelForm
+from .forms import RenewBookForm, RenewBookModelForm, UerRegisterForm
 from django.http import HttpResponseRedirect
 import datetime
 
@@ -35,6 +36,20 @@ def index(request):
 
     return render(request, 'catalog/index.html', context=context)
 
+# User register
+def register(request):
+
+    if request.method == 'POST':
+        form = UerRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Your account has been created! You can log in now. {username}!')
+            form = UerRegisterForm()
+            return redirect('login')
+    else:
+        form = UerRegisterForm()
+    return render(request, 'registration/register.html', {'form':form})
 
 @login_required
 @permission_required('catalog.can_mark_returned', raise_exception=True)

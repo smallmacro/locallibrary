@@ -28,11 +28,22 @@
       </tr>
       
     </table>
-    <input type="submit" value="login" />
+
+    <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Log In</button>
+    </div>
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
-  {# Assumes you setup the password_reset view in your URLconf #}
-  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+  
+  <div class="border-top pt-3">
+    <div class="form-group">
+        <a href="{% url 'password_reset' %}">Lost password?</a>
 
+
+        <small class="text-muted">
+            Need An Account? <a href="{%url 'register' %}" class="ml-2">Sign Up Now</a>
+        </small>
+    </div>
+  </div>
 {% endblock %}
