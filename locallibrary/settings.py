@@ -29,9 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g92j9tax!#a3dsa@1$8obt2_+&k3q+pmu)5%asj6ySddadkag')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = os.environ.get('DJANGO_DEBUG','') != 'False'
 
-ALLOWED_HOSTS = ['gentle-crag-74102.herokuapp.com']
+ALLOWED_HOSTS = ['gentle-crag-74102.herokuapp.com','127.0.0.1']
 
 
 # Application definition
