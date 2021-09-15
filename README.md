@@ -108,5 +108,5 @@ One worth to mention is the relationship between some test functions may be recu
 
 ### Confused
 
-1.  how the `session` will be used in more complicated ways.
+1. how the `session` will be used in more complicated ways.
 2. Writing `Unit Test` seems to be a boring and tedious job which may take much time. How it would be in real production?    
