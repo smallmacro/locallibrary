@@ -26,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # # c7f213cab81b7a3c40799ed14f8f30a50f9af1d8daa7b58c
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g92j9tax!#a3dsa@1$8obt2_+&k3q+pmu)5%asj6ySddadkag')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gentle-crag-74102.herokuapp.com']
 
 
 # Application definition
