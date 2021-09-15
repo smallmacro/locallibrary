@@ -100,6 +100,14 @@ The most essential thing in writing a unit test is focusing on the desired desig
 
 One worth to mention is the relationship between some test functions may be recuresive. For example ,`fun1()` contains `step A`and `step B`, while `fun2()`may contains `step A`, `step B` and `step C`.
 
+7. Before deploying the application, we need to:
+- Make a few changes to your project settings.
+- Choose an environment for hosting the Django app.
+- Choose an environment for hosting any static files.
+- Set up a production-level infrastructure for serving your website.
+
+`python manage.py check --deploy` can automatically check settings security before deployment.
+
 ### Things need to be done:
 1. automatically check the status of book instance
 2. manage the borrowed books with due date, list them or remind the borrower with a email .

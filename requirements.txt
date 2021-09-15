@@ -1,0 +1,6 @@
+dj-database-url==0.5.0
+Django==3.1.2
+django-heroku
+gunicorn 
+psycopg2 
+whitenoise
