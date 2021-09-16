@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, reverse,redirect
-from .models import (Book, BookInstance, Author,Genre)
+from .models import (Book, BookInstance, Author,Genre, BookReview)
 from django.contrib import messages
 from django.views.generic import (
     ListView,
@@ -139,14 +139,49 @@ class BookListView(LoginRequiredMixin,ListView):
     #     pass
 
 
+
 class BookDetailView(LoginRequiredMixin,DetailView):
     template_name = 'catalog/book_detail.html'
     model = Book
     context_object_name = 'book'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(BookDetailView, self).get_context_data(**kwargs)
-    #     context['copies'] = 
+    # Add the Bookreview
+    def get_context_data(self, **kwargs):
+        context = super(BookDetailView, self).get_context_data(**kwargs)
+        context['bookreview'] = BookReview.objects.filter(book_on=self.object).order_by('-post_date')
+        return context
+
+class BookReviewCreateView(LoginRequiredMixin,CreateView):
+    model = BookReview
+    template_name = 'catalog/bookreview_form.html'
+    fields = ['post_date','content']
+
+    def get_context_data(self,**kwargs):
+        context = super(BookReviewCreateView, self).get_context_data(**kwargs)
+        
+        context['book'] = get_object_or_404(Book, pk=self.kwargs.get('pk'))
+
+        return context
+
+    def form_valid(self,form):
+        form.instance.reviewer = self.request.user
+        form.instance.book_on = get_object_or_404(Book, pk=self.kwargs.get('pk'))
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        # print(self.kwargs.get('pk'))
+        return reverse_lazy('book-detail',kwargs={'pk':self.kwargs.get('pk')})
+
+# class BookReviewDetailView(DetailView):
+#     model = BookReview
+#     template_name = 'catalog/bookreview_detail.html'
+
+    # def get_queryset(self,**kwargs):
+    #     print()
+    #     self.object = BookReview.objects.filter(book_on=get_object_or_404(Book,pk=self.kwargs.get('bid')))
+
+
 class BookCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
     model = Book
     fields = ['title', 'author' ,'written_language','ISBN','summary','category']

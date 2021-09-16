@@ -26,7 +26,9 @@ from .views import (
    AuthorUpdateView,
    AuthorDeleteView,
    LoanedBookByUserListView,
-   LoanedBookManagementListView
+   LoanedBookManagementListView,
+   BookReviewCreateView,
+   # BookReviewDetailView
 
    )
 
@@ -50,6 +52,8 @@ urlpatterns = [
    path('book/<int:pk>/update/', BookUpdateView.as_view(), name='book-update'),
    path('book/<int:pk>/delete/', BookDeleteView.as_view(), name='book-delete'),
    path('book/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
+   path('book/<int:pk>/create', BookReviewCreateView.as_view(), name='bookreview-create'),
+   # path('book/<int:bid>/review-<int:pk>/', BookReviewDetailView.as_view(), name='bookreview-detail'),
 
    path('author/', AuthorListView.as_view(), name='author-list'),
    path('author/new/', AuthorCreateView.as_view(), name='author-create'),

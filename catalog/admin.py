@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Genre,Author,Language, Book,BookInstance
+from .models import Genre,Author,Language, Book,BookInstance, BookReview
 
 
 
@@ -57,3 +57,8 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('status', 'due_back','borrower')
         }),
     )
+
+
+@admin.register(BookReview)
+class BookReviewAdmin(admin.ModelAdmin):
+    list_display = ('__str__','post_date','display_reviewer')

@@ -118,7 +118,10 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 ```
 
+9. `reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None)` VS `reverse_lazy()`
 
+`reverse` reverse the view name then return a URL in `URLconf`.
+While `reverse_lazy`  is useful for when you need to use a URL reversal before your project’s URLConf is loaded.
 
 ### Things need to be done:
 1. Researches on online library  need to done before fully designing website features. -- Product Functions:
@@ -126,7 +129,7 @@ DATABASES['default'].update(db_from_env)
     - A new user can register [First name , Last name , email, personal decription]and has its own profile and so on. 
     - automatically check the status of book instance,manage the borrowed books with due date, list them or remind the borrower with a email .
     - set the limitation number  of books a borrower can take. 
-    
+
 2. Need a good design for the website.
 
 ### Confused

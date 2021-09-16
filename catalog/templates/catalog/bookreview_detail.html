@@ -1,0 +1,39 @@
+
+{% extends "catalog/base.html"%}
+
+{%block title%} 
+ {% if bookreview %}
+<title> {{bookreview.book_on.title}} </title>
+{% else %}
+<title>Sorry, this review does not exist!</title>
+{% endif%}
+{%endblock %}
+
+{% block content %}
+<div class="container">
+<h1>Local Library Home</h1>
+  
+  <h2>Book Review :</h2>
+  {% if bookreview %}
+  <p>Book you are reviewing: <a href="{{bookreview.book_on.get_absolute_url}}">{{bookreview.book_on.title}}
+ 
+  <ul class="mb-4">
+
+    
+    
+    <li><strong>Post date: :</strong> {{ bookreview.post_date }}</li>
+    <li><strong>Content:</strong> {{ bookreview.content}}</li>
+   
+  </ul>
+  
+
+  {% else %}
+    <p>There is no this review in the website.</p>
+
+  {% endif%}
+ 
+  
+</div>
+
+
+{% endblock content%}

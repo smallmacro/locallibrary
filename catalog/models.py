@@ -82,7 +82,7 @@ class BookInstance(models.Model):
         default='m',
         help_text='Book availability',
         )
-    borrower = models.ForeignKey(User,on_delete=models.SET_NULL, null=True)
+    borrower = models.ForeignKey(User,on_delete=models.SET_NULL, null=True,blank=True)
 
     class Meta:
         ordering = ['due_back']
@@ -105,6 +105,20 @@ class BookInstance(models.Model):
         return False
 
 
+class BookReview(models.Model):
+    post_date = models.DateTimeField()
+    content = models.TextField(max_length=1000)
+    book_on = models.ForeignKey(Book,on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL,null=True)
+    ordering = '-post_date'
 
+    def __str__(self):
+        return self.content[:50]
+
+    # def get_absolute_url(self):
+    #     return reverse('bookreview-detail', kwargs={'id':self.id} )
+
+    def display_reviewer(self):
+        return f'{self.reviewer.username}'
 
     

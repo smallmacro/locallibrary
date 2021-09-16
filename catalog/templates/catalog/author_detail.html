@@ -34,17 +34,22 @@
 
   {% endif%}
   <div class="container">
-    <h3>Books In Library:</h3>
-      {% for book in author.book_set.all %}
-         
-           <p> <strong>Books Title:</strong><a href="{{ book.get_absolute_url }} "> {{ book.title }} </a></p>
-           <p><strong>Summary:</strong> {{ book.summary }}</p>
-           <p><strong>Language:</strong> {{ book.written_language }}</p>
-           <p><strong>Genres:</strong> {{ book.category.all|join:", " }}</p>
+    {% if author.book_set.all %}
+      <h3>Books In Library:</h3>
+        {% for book in author.book_set.all %}
+           
+             <p> <strong>Books Title:</strong><a href="{{ book.get_absolute_url }} "> {{ book.title }} </a></p>
+             <p><strong>Summary:</strong> {{ book.summary }}</p>
+             <p><strong>Language:</strong> {{ book.written_language }}</p>
+             <p><strong>Genres:</strong> {{ book.category.all|join:", " }}</p>
 
-          
+            
 
-     {% endfor %}
+       {% endfor %}
+
+     {% else %}
+         <p>There is no available copy  in the library.</p>
+    {%endif%}
   </div>
   
 </div>
