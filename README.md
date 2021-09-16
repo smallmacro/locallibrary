@@ -88,10 +88,12 @@ class MyClassView(LoginRequiredMixin,PermissionRequiredMixin,View):
 
 
 5.  Forms variables in Template:
-
+```html
 `{{ form.as_table }}` will render them as table cells wrapped in <tr> tags
 `{{ form.as_p }}` will render them wrapped in <p> tags
 `{{ form.as_ul }}` will render them wrapped in <li> tags
+```
+
 
 6. Write automated tests. 
 `Unit tests`: Verify functional behavior of individual components, often to class and function level.
